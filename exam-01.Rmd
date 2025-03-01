@@ -104,7 +104,8 @@ The main data is in the `flights` data frame, but there are additional data sets
 1.  **Question 1 (10 points)** - What are the ten most common destinations for flights from NYC airports in 2013?
     Make a table that lists these in descending order of frequency and shows the number of flights heading to each airport.
     
-***The ten most common destinations for these flights are ORD and nine IAD locations. I first arranged the flights in descending order, and I selected the `destinations` and `flight` variables using the `select()` function.***
+***The ten most common destinations for these flights are the ORD airport and nine IAD airports. I first arranged the flights in descending order, and I selected the `destinations` and `flight` variables using the `select()` function.***
+
     
 ```{r}
 flights %>%
@@ -166,21 +167,40 @@ flights %>%
 
     a\.
     Calculate the proportion of flights that are delayed at departure at each of these time intervals.
+    
+***The proportion of flights between 12:01am-6am is around***
 
     b\.
     Comment on how the likelihood of being delayed change throughout the day?
 
+```{r}
+flights %>%
+  select(flight, time_hour, dep_delay) %>%
+  arrange(desc(time_hour), proportions(flight)) 
+```
+
 6.  **Question 6 (15 points)** - Find the flight with the longest air time.
+
+```{r}
+flight_planes <- full_join(flights, planes, by = "tailnum")
+
+flight_planes %>%
+  select(flight, air_time, dest, seats) %>%
+  arrange(desc(air_time))
+
+```
 
     a\.
     How long is this flight?
-
+***Flight 15 had the longest air time of 695 minutes.***
     b\.
     What city did it fly to?
-
+***The plane flew to HNL, or Honolulu. (https://www.google.com/search?client=firefox-b-1-d&q=HNL)***
     c\.
     How many seats does the plane that flew this flight have?
+***The plane that flew had 292 seats.***
 
+***For this plot, I `full joined` the `flights` and `planes` datasets, and I `selected` the variables `flight`, `air time`, `destination`, and `seats` to plot, and I `arranged` the `air time` in `descending` order. I looked up HNL on https://www.google.com/search?client=firefox-b-1-d&q=HNL to find what HNL means.***
 7.  **Question 7 (15 pts)** - The `airports` data frame contains information on a large number of primarily American airports.
     These data include location information for these airports in the form of latitude and longitude coordinates.
     In this question we limit our focus to the [Contiguous United States](https://en.wikipedia.org/wiki/Contiguous_United_States).
