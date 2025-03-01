@@ -168,10 +168,12 @@ flights %>%
     a\.
     Calculate the proportion of flights that are delayed at departure at each of these time intervals.
     
-***The proportion of flights between 12:01am-6am is around***
+***The proportion of flights between 12:01am-6am that are delayed at departure is around 219-6117 flights. The proportion of flights between 6:01am-12pm that are delayed at departure is around 1-5801 flights. The proportion of flights between 12:01pm-6pm that are delayed at departure is around 3-5846 flights. The proportion of flights between 6:01pm-12am that are delayed at departure is around 21-6049 flights. I put in the console `?proportions` to help me figure this one out. I `selected` the variables `flight`, `time-hour`, and `departure delay`. I `arranged` the dataset to where `time-hour` was in `descending` order and it calculated the `proportions` of `flights`.***
 
     b\.
     Comment on how the likelihood of being delayed change throughout the day?
+    
+***The likelihood of being delayed is cyclic, meaning it goes down from 12:01am-12pm, but then goes up from 12:01pm-12am.***
 
 ```{r}
 flights %>%
