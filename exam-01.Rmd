@@ -223,7 +223,17 @@ ggplot(airports, aes(x = lat, y = lon)) +
     You will have to create `arrival` yourself, it is a categorical variable that is equal to `"ontime"` when `arr_delay <= 0` and `"delayed"` when `arr_delay > 0`.
 
 ![](img/plot-to-recreate.png)
+```{r}
+flights <- flights %>%
+  mutate(
+    arrival = if_else(arr_delay <= 0, "ontime", "delayed")
+  )
 
+ggplot(flights, aes(x = arrival, y = dep_delay)) +
+  geom_boxplot() +
+  facet_grid(origin ~ dest)
+```
+***To create the variable `arrival`, I mutated the `flights` dataset by saying that the arrival is `on time` if `arr_delay <= 0` and `delayed` if `arr_delay > 0`. I used lab03 as a help for me to make this variable.***
 **Extra Credit (5 pts)** - Create a visualization that effectively shows if there is a relationship between the average daily departure delay and the average daily temperature for all three New York city airports.
 Your answer must be given in a single pipe.
 (You should only spend time on this question once you have finished answering the others)
