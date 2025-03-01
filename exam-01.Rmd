@@ -148,6 +148,19 @@ flights %>%
 
 4.  **Question 4 (10 points)** - What was the mean temperature at the origin airport on the day with the highest departure delay?
     Your answer should include the name of origin airport, the date with the highest departure delay, and the mean temperature on that day.
+    
+***The highest departure delay is 1301 on January 9th of 2013 at the JFK origin airport. The mean temperature on that day was from 33.98°-48.02°. I tried to `full join` `weather` and `flights` together, but R wouldn't let me because the result would end up with too many rows. So for `weather` I `grouped by` `year`, `month`, `day`, `temperature`, and `origin airport`, and I `summarized` the `mean` temperature. Then for `flights`, I `selected` the variables `year`, `month`, `day`, `departure delay`, and `origin airport`, and `arranged` the `departure delay` in `descending` order.***
+    
+```{r}
+weather %>% 
+  group_by(year, month, day, temp, origin) %>%
+  summarize(temp = mean(temp, na.rm = TRUE))
+
+flights %>%
+  select(year, month, day, dep_delay, origin) %>%
+  arrange(desc(dep_delay))
+  
+```
 
 5.  **Question 5 (15 points)** - Consider breaking the day into four time intervals: 12:01am-6am, 6:01am-12pm, 12:01pm-6pm, 6:01pm-12am.
 
