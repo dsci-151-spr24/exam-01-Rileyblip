@@ -102,12 +102,30 @@ The main data is in the `flights` data frame, but there are additional data sets
 ## Questions
 
 1.  **Question 1 (10 points)** - What are the ten most common destinations for flights from NYC airports in 2013?
-    Make a table that lists these in descending order of frequency and shows the number of fligts heading to each airport.
+    Make a table that lists these in descending order of frequency and shows the number of flights heading to each airport.
+    
+***The ten most common destinations for these flights are ORD and nine IAD locations. I first arranged the flights in descending order, and I selected the `destinations` and `flight` variables using the `select()` function.***
+    
+```{r}
+flights %>%
+  arrange(desc(flight)) %>%
+  select(dest, flight)
+```
 
 2.  **Question 2 (10 points)** - Which airlines have the most flights departing from NYC airports in 2013?
     Make a table that lists these in descending order of frequency and shows the number of flights for each airline.
     In your narrative mention the names of the airlines as well.
     *Hint:* You can use the `airlines` dataset to look up the airline name based on `carrier` code.
+    
+***The airlines that have the most flights departing are Skywest Airlines Inc. and ExpressJet Airlines Inc. I had to `full_join` datasets `flights` and `airlines` with the help of `lab-05-wrangling-spatial-data`. I then `arranged` the flights in `descending` order, and I `selected` variables `flight`, `name`, and `carrier`.***
+    
+```{r}
+airlines_and_flights <- full_join(airlines, flights, by = "carrier")
+
+airlines_and_flights %>%
+  arrange(desc(flight)) %>%
+  select(flight, name, carrier)
+```
 
 3.  **Question 3 (10 points)** - Consider only flights that have non-missing arrival delay information.
     Your answer should include the name of the carrier in addition to the carrier code and the values asked.
@@ -117,6 +135,16 @@ The main data is in the `flights` data frame, but there are additional data sets
 
     b\.
     Which carrier had the lowest mean arrival delay?
+    
+***Based on searching through the data, the carrier with the lowest mean arrival delay is carrier AA with tail number N328AA. the carrier with the highest mean arrival delay is carrier AA with tail number N324AA. I used "R for Data Science: Second Edition" by Hadley Wickham, Mine Cetinkaya-Rundel, and Garrett Grolemund, page 232, to `group by` `flight`, `arrival delay`, `carrier`, and `tail number` and summarized the `arrival delay mean` trying to remove `NAs` using `na.rm = TRUE`.***
+    
+```{r}
+flights %>%
+  group_by(flight, arr_delay, carrier, tailnum) %>%
+  summarize(
+    arr_delay = mean(arr_delay, na.rm = TRUE)
+  )
+```
 
 4.  **Question 4 (10 points)** - What was the mean temperature at the origin airport on the day with the highest departure delay?
     Your answer should include the name of origin airport, the date with the highest departure delay, and the mean temperature on that day.
