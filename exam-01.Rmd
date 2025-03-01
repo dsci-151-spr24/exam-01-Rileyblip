@@ -209,6 +209,13 @@ flight_planes %>%
     *Hint:* You will first need to limit your analysis to the Contiguous United States.
     [This Wikipedia article](https://en.wikipedia.org/wiki/List_of_extreme_points_of_the_United_States) can help, but you're welcomed to use other resources as well.
     Make sure to cite whatever resource you use.
+    
+***Many airports seem to be located close to each other.***
+
+```{r}
+ggplot(airports, aes(x = lat, y = lon)) +
+  geom_point()
+```
 
 8.  **Question 8 (15 pts)** - Recreate the plot included below using the `flights` data.
     Once you have created the visualization, in no more than one paragraph, describe what you think the point of this visualization might be.
